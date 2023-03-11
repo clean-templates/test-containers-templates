@@ -1,2 +1,26 @@
 server:
   port: 8999
+spring:
+  cloud:
+    config:
+      allow-override: true
+      override-none: true
+      overrideSystemProperties: false
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        prefer-ip-address: true
+        health-check-timeout: 120s
+        health-check-critical-timeout: 120s
+        catalog-services-watch-timeout: 30
+        enabled: true
+        instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+        query-passing: true
+        register-health-check: false
+      retry:
+        max-attempts: 10
+
+
+  application:
+    name: notification-service
