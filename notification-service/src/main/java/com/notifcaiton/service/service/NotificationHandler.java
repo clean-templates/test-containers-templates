@@ -10,7 +10,7 @@ public class NotificationHandler implements INotificationHandler{
     private final INotifier notifier;
 
     @Override
-    public void notify(String customerEmail) {
-        notifier.sendEmail(customerEmail);
+    public void notify(String driverId) {
+        notifier.sendEmail(driverId);
     }
 }

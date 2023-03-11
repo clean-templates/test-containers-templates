@@ -34,3 +34,11 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+
+rabbitmq:
+  exchanges:
+    internal: "notification.exchange"
+  queues:
+    test-queue: "notification-queue"
+  routing-keys:
+    test-key: "internal.notification.notification-key"

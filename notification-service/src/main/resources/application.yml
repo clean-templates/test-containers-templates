@@ -24,3 +24,12 @@ spring:
 
   application:
     name: notification-service
+
+
+rabbitmq:
+  exchanges:
+    internal: "notification.exchange"
+  queues:
+    test-queue: "notification-queue"
+  routing-keys:
+    test-key: "internal.notification.notification-key"
