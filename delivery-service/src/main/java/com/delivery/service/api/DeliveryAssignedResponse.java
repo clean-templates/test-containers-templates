@@ -1,19 +1,16 @@
-package com.order.service.api;
+package com.delivery.service.api;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
-
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Builder
-public class ApprovedOrderApiResponse {
-    private String orderId;
+public class DeliveryAssignedResponse {
     private String driverId;
-    private Timestamp timestamp;
-
+    private String orderId;
 }

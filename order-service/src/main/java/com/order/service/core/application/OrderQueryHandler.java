@@ -2,6 +2,8 @@ package com.order.service.core.application;
 
 import com.order.service.api.ApprovedOrderApiResponse;
 import com.order.service.infra.IOrderProvider;
+import com.order.service.infra.external.services.DeliveryAssignedResponse;
+import com.order.service.infra.external.services.DeliveryFeignClient;
 import com.order.service.infra.model.OrderModel;
 import com.order.service.infra.model.OrderStatus;
 import lombok.AllArgsConstructor;
@@ -19,18 +21,23 @@ public class OrderQueryHandler implements IOrderQueryHandler {
      * meaning that your OrderModel should be mapped to an Order Domain Object in your core
      */
     private IOrderProvider orderProvider;
+    private DeliveryFeignClient deliveryFeignClient;
 
     @Override
     public ApprovedOrderApiResponse approveOrder(String orderId) {
         OrderModel order = orderProvider.getOrder(orderId);
 
-        if(order.getOrderStatus() != OrderStatus.ON_GOING){
-            throw new IllegalStateException("Order " + orderId +  " is not in invalid state!");
+        if (order.getOrderStatus() != OrderStatus.ON_GOING) {
+            throw new IllegalStateException("Order " + orderId + " is not in invalid state!");
         }
         order.setOrderStatus(OrderStatus.APPROVED);
         OrderModel updatedOrder = orderProvider.save(order);
 
-        return ApprovedOrderApiResponse.builder().orderId(updatedOrder.getOrderId()).timestamp(Timestamp.from(Instant.now())).build();
+        DeliveryAssignedResponse response = deliveryFeignClient.assignOrder(orderId).getBody();
+
+        return ApprovedOrderApiResponse.builder().orderId(updatedOrder.getOrderId())
+                .driverId(response.getDriverId())
+                .timestamp(Timestamp.from(Instant.now())).build();
 
     }
 }
