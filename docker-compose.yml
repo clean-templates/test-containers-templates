@@ -7,3 +7,28 @@ services:
     ports:
       - "8500:8500"
     restart: always
+    networks:
+      - app
+
+  postgres:
+    container_name: postgres-order
+    image: postgres:13.5
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass213
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - app
+    restart: unless-stopped
+
+
+networks:
+  app:
+    driver: bridge
+
+volumes:
+  postgres:

@@ -1,6 +1,12 @@
 server:
   port: 8080
 spring:
+  datasource:
+    password: 'pass213'
+    username: 'user'
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/orderdatabase
+
   cloud:
     config:
       allow-override: true
@@ -24,3 +30,7 @@ spring:
 
   application:
     name: order-service
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
