@@ -3,6 +3,7 @@ package com.order.service.infra;
 import com.order.service.configs.FeignClientConfig;
 import com.order.service.infra.model.OrderModel;
 import com.order.service.infra.model.OrderStatus;
+import containers.postgres.ConsulTestContainer;
 import containers.postgres.PostgresTestContainer;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,9 @@ public class OrderProviderIntegrationTest {
     @BeforeAll
     static void beforeAll() {
         PostgresTestContainer instance = PostgresTestContainer.getInstance();
+        ConsulTestContainer consul = ConsulTestContainer.getInstance();
         instance.start();
+        consul.start();
     }
 
     @BeforeEach

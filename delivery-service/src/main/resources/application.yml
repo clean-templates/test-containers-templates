@@ -11,7 +11,7 @@ spring:
       overrideSystemProperties: false
     consul:
       host: localhost
-      port: 8500
+      port: 49243
       discovery:
         prefer-ip-address: true
         health-check-timeout: 120s
