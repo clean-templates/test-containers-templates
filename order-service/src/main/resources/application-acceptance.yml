@@ -1,0 +1,47 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://${POSTGRES_HOST:postgres-test-container}:${POSTGRES_PORT:5432}/${DB_NAME:test}
+    username: ${DB_USERNAME:user}
+    password: ${DB_PASSWORD:pass213}
+
+  cloud:
+    config:
+      allow-override: true
+      override-none: true
+      overrideSystemProperties: false
+    consul:
+      host: consul
+      port: 8500
+      discovery:
+        prefer-ip-address: true
+        health-check-timeout: 120s
+        health-check-critical-timeout: 120s
+        catalog-services-watch-timeout: 30
+        enabled: true
+        instance-id: "${spring.application.name}:${spring.application.instance_id:${random.value}}-test-container"
+        query-passing: true
+        register-health-check: false
+      retry:
+        max-attempts: 10
+
+
+  application:
+    name: order-service
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+
+rabbitmq:
+  exchanges:
+    internal: "notification.exchange"
+  queues:
+    test-queue: "notification-queue"
+  routing-keys:
+    test-key: "internal.notification.notification-key"
