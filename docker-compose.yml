@@ -25,6 +25,42 @@ services:
       - app
     restart: unless-stopped
 
+  order-service:
+    image: order-service:1.0.0
+    ports:
+      - "8080:8080"
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - app
+
+  notification-service:
+    image: notification-service:1.0.0
+    ports:
+      - "8999:8999"
+    build:
+      context: ./notification-service
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - app
+
+  delivery-service:
+    image: delivery-service:1.0.0
+    ports:
+      - "8081:8081"
+    build:
+      context: ./delivery-service
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - app
+
   rabbitmq:
     image: rabbitmq:3.9.11-management-alpine
     container_name: rabbitmq

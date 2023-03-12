@@ -10,6 +10,7 @@
         <module>order-service</module>
         <module>notification-service</module>
         <module>delivery-service</module>
+        <module>acceptance-test</module>
     </modules>
 
 

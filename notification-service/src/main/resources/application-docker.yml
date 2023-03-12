@@ -1,6 +1,5 @@
 server:
-  port: 8081
-
+  port: 8999
 spring:
   cloud:
     config:
@@ -8,7 +7,7 @@ spring:
       override-none: true
       overrideSystemProperties: false
     consul:
-      host: localhost
+      host: consul
       port: 8500
       discovery:
         prefer-ip-address: true
@@ -24,4 +23,15 @@ spring:
 
 
   application:
-    name: delivery-service
+    name: notification-service
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+
+rabbitmq:
+  exchanges:
+    internal: "notification.exchange"
+  queues:
+    test-queue: "notification-queue"
+  routing-keys:
+    test-key: "internal.notification.notification-key"
