@@ -1,0 +1,27 @@
+server:
+  port: 8081
+
+spring:
+  cloud:
+    config:
+      allow-override: true
+      override-none: true
+      overrideSystemProperties: false
+    consul:
+      host: consul
+      port: 8500
+      discovery:
+        prefer-ip-address: true
+        health-check-timeout: 120s
+        health-check-critical-timeout: 120s
+        catalog-services-watch-timeout: 30
+        enabled: true
+        instance-id: "${spring.application.name}:${spring.application.instance_id:${random.value}}-test-container"
+        query-passing: true
+        register-health-check: false
+      retry:
+        max-attempts: 10
+
+
+  application:
+    name: delivery-service
