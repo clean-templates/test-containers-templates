@@ -39,7 +39,8 @@ services:
     depends_on:
       - consul
       - postgres
-      
+      - rabbitmq
+
   notification-service:
     image: notification-service:1.0.0
     ports:
@@ -53,6 +54,7 @@ services:
       - app
     depends_on:
       - consul
+      - rabbitmq
 
   delivery-service:
     image: delivery-service:1.0.0
